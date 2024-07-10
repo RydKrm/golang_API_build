@@ -1,38 +1,41 @@
 package database
 
 import (
-	"database/sql"
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-var database *sql.DB 
+// This variable hold the database connection instance.
+var DB *gorm.DB
 
-
-func SetupDatabaseConnection() *sql.DB {
-
-	// create a connection variable 
-	database, err := sql.Open("mysql", "go_user:gouser1234@(127.0.0.1:3306)/go_api?parseTime=true");
-
-	// check for database connected or not 
+func SetupDatabaseConnection() {
+	dsn := "go_user:gouser1234@(127.0.0.1:3306)/go_api?parseTime=true"
+	var err error
+	// create a connection with database 
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("Error occur %v\n", err)
+		log.Fatalf("Error occurred: %v\n", err)
 	}
 
-	testPing := database.Ping()
-
-	if testPing != nil {
-		log.Fatalf("Error connecting database")
+	sqlDB, err := DB.DB()
+	if err != nil {
+		log.Fatalf("Error getting database instance: %v", err)
 	}
 
-	return database;
-
+	if err := sqlDB.Ping(); err != nil {
+		log.Fatalf("Error connecting to the database: %v", err)
+	}
 }
 
+func CloseDatabaseConnection() {
+	sqlDB, err := DB.DB()
+	if err != nil {
+		log.Fatalf("Error getting database instance: %v", err)
+	}
 
-func CloseDatabaseConnection(database *sql.DB) {
-	if err := database.Close(); err != nil {
+	if err := sqlDB.Close(); err != nil {
 		log.Fatalf("Error closing database connection: %v", err)
 	}
 }

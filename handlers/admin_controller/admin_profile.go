@@ -1,14 +1,15 @@
 package handlers
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/RydKrm/golang_API_build/models"
-	"golang.org/x/crypto/bcrypt"
 	"net/http"
-	"time"
-	"github.com/dgrijalva/jwt-go"
+
 	"github.com/RydKrm/golang_API_build/database"
+	"github.com/RydKrm/golang_API_build/models"
+	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
+
+
 
 func Register(c *gin.Context) {
 	var admin models.Admin
@@ -51,7 +52,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	if !admin.ComparePassword(request.Password) {
+	if !admin.CheckPassword(request.Password) {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Incorrect password"})
 		return
 	}
@@ -123,7 +124,7 @@ func UpdatePassword(c *gin.Context) {
 		return
 	}
 
-	if !admin.ComparePassword(request.OldPassword) {
+	if !admin.CheckPassword(request.OldPassword) {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Old password did not match"})
 		return
 	}

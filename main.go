@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/RydKrm/golang_API_build/config"
+	"github.com/RydKrm/golang_API_build/database"
 	routes "github.com/RydKrm/golang_API_build/routers"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -19,9 +19,8 @@ func main() {
 		log.Fatalf("Error loading .env file")
 	}
 
-	database := config.SetupDatabaseConnection()
-
-	defer config.CloseDatabaseConnection(database)
+	database.SetupDatabaseConnection()
+	defer database.CloseDatabaseConnection()
 
 	// if os.Getenv("GIN_MODE") != "debug" {
     // 	gin.SetMode(gin.ReleaseMode)
