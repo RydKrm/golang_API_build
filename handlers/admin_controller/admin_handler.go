@@ -1,4 +1,4 @@
-package handlers
+package admin_controller
 
 import (
 	"net/http"
@@ -13,3 +13,14 @@ func GetAdmins(c *gin.Context){
 func CreateAdmin(c *gin.Context){
 	c.JSON(http.StatusCreated, gin.H{"message":"Create admin"})
 }
+
+func GetAdmin(c *gin.Context){
+	
+}
+
+func GetAllCounselorPasseword(c *gin.Context){}
+
+func GetAllManagerPassword(c *gin.Context){}
+
+func GetAllAdminPassword(c *gin.Context){}
+

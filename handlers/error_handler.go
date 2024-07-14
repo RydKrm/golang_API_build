@@ -1,4 +1,4 @@
-package handlers
+package error_handlers
 
 import (
 	"github.com/gin-gonic/gin"
