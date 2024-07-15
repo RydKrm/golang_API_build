@@ -5,8 +5,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func AdminProfileRouter(router *gin.Engine) {
+    profile := router.Group("/api/admin")
 
-func RegisterAdminProfileRouter(router *gin.RouterGroup){
-	router.POST("/register", admin_controller.Register);
-	router.POST("/login", admin_controller.Login)
+    profile.POST("/register", admin_controller.Register)
+    profile.POST("/login", admin_controller.Login)
+    profile.PATCH("/update/:id", admin_controller.UpdateProfile)
+    profile.PATCH("/updatePassword/:id", admin_controller.UpdatePassword)
+    profile.PATCH("/updateStatus/:id", admin_controller.UpdateStatus)
+    profile.GET("/single/:id", admin_controller.GetSingleAdmin)
+    profile.GET("/allAdmin", admin_controller.GetAllAdmin)
+
 }

@@ -3,6 +3,7 @@ package database
 import (
 	"log"
 
+	"github.com/RydKrm/golang_API_build/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -16,7 +17,7 @@ func SetupDatabaseConnection() {
 	// create a connection with database 
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("Error occurred: %v\n", err)
+		log.Fatalf("Error occurred while connecting to the database: %v\n", err)
 	}
 
 	sqlDB, err := DB.DB()
@@ -27,6 +28,15 @@ func SetupDatabaseConnection() {
 	if err := sqlDB.Ping(); err != nil {
 		log.Fatalf("Error connecting to the database: %v", err)
 	}
+
+	// Auto-migrate the schema
+	// database schema is updated automatically based on your Go struct definitions 
+	// Auto-migrate models
+	err = DB.AutoMigrate(&models.Admin{}, &models.Company{})
+	if err != nil {
+		log.Fatalf("Error auto-migrating schema: %v\n", err)
+	}
+
 }
 
 func CloseDatabaseConnection() {
@@ -38,4 +48,6 @@ func CloseDatabaseConnection() {
 	if err := sqlDB.Close(); err != nil {
 		log.Fatalf("Error closing database connection: %v", err)
 	}
+
+	log.Println("Database connection closed")
 }
