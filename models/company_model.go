@@ -1,10 +1,12 @@
 package models
 
-import "github.com/jinzhu/gorm"
+import (
+	"gorm.io/gorm"
+)
 
-type Company struct{
+type Company struct {
 	gorm.Model
-	Name string `gorm:"type:varchar(255);not null" json:"name"`
-	Description string `gorm:"type:varchar(600);not null" json:"description"`
-	Status bool `gorm:"default:true" json:"status"`
-}  
+	Name        string `json:"name" gorm:"column:name;not null"`
+	Description string `json:"description" gorm:"column:description"`
+	Status      bool   `json:"status" gorm:"default:true"`
+}

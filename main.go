@@ -8,6 +8,8 @@ import (
 	"github.com/RydKrm/golang_API_build/database"
 	"github.com/RydKrm/golang_API_build/routers/admin_routers"
 	"github.com/RydKrm/golang_API_build/routers/company_routes"
+	"github.com/RydKrm/golang_API_build/routers/counselor_routes"
+	"github.com/RydKrm/golang_API_build/routers/manager_routes"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -52,6 +54,8 @@ func main() {
     // Admin routes
     admin_routers.AdminProfileRouter(router)
 	company_routes.CompanyCrudRouter(router)
+	counselor_routes.CounselorCrudRouter(router)
+	manager_routes.ManagerCrudRouter(router)
 
 	// Set trusted proxies if needed
 	router.SetTrustedProxies([]string{"127.0.0.1"})

@@ -8,7 +8,8 @@ import (
 func CompanyCrudRouter(router *gin.Engine){
 	crud := router.Group("/api/company")
 
-	crud.POST("/create", company_controller.CreateCompany)
+	crud.POST("/create", company_controller.CreateCompany);
+	// crud.POST("/single/:id", company_controller.)
 
 
 }

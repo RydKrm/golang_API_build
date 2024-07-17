@@ -32,7 +32,7 @@ func SetupDatabaseConnection() {
 	// Auto-migrate the schema
 	// database schema is updated automatically based on your Go struct definitions 
 	// Auto-migrate models
-	err = DB.AutoMigrate(&models.Admin{}, &models.Company{})
+	err = DB.AutoMigrate(&models.Admin{}, &models.Company{}, &models.Counselor{}, &models.Program{}, &models.Manager{})
 	if err != nil {
 		log.Fatalf("Error auto-migrating schema: %v\n", err)
 	}
